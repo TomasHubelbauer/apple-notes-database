@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Apple Notes Database</title>
+    <style>
+      fieldset {
+        display: flex;
+        flex-direction: column;
+        gap: 1ex;
+      }
+
+      label {
+        display: flex;
+      }
+
+      label>span {
+        width: 10ch;
+      }
+
+      label>input {
+        width: 20ch;
+      }
+    </style>
+    <script type="module">
+      const typeInput = document.getElementById('typeInput');
+      const idInput = document.getElementById('idInput');
+      const dataTextArea = document.getElementById('dataTextArea');
+      const getButton = document.getElementById('getButton');
+      const postButton = document.getElementById('postButton');
+
+      getButton.addEventListener('click', async () => {
+        const response = await fetch(`/${typeInput.value}/${idInput.value}`);
+        const data = await response.json();
+        dataTextArea.value = JSON.stringify(data, null, 2);
+      });
+
+      postButton.addEventListener('click', async () => {
+        await fetch(`/${typeInput.value}/${idInput.value}`, {
+          method: 'POST',
+          body: dataTextArea.value,
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <fieldset>
+      <legend>Apple Notes Database</legend>
+      <label>
+        <span>Type:</span>
+        <input id="typeInput" />
+      </label>
+      <label>
+        <span>ID:</span>
+        <input id="idInput" />
+      </label>
+      <textarea id="dataTextArea" rows="10"></textarea>
+      <button id="getButton">GET</button>
+      <button id="postButton">POST</button>
+    </fieldset>
+  </body>
+</html>
