@@ -1,7 +1,7 @@
 import child_process from 'child_process';
 
 /**
- * 
+ * @param {string} script  - multiline sequence of commands
  * @returns {Promise<string>}
  */
 export default function execute(script) {
