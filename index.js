@@ -5,48 +5,81 @@ import ensureAppFolder from './ensureAppFolder.js';
 import ensureTypeFolder from './ensureTypeFolder.js';
 import getNote from './getNote.js';
 import setNote from './setNote.js';
+import listNotes from './listNotes.js';
 
 const server = createServer();
 
 server.on('request', async (request, response) => {
-  if (request.method === 'GET' && request.url === '/') {
-    response.setHeader('Content-Type', 'text/html');
-    response.end(await fs.promises.readFile('./index.html', 'utf-8'));
-    return;
-  }
-
   try {
-    const [type, id, extra] = request.url.slice('/'.length).split('/');
-    if (extra?.length > 0) {
-      throw new Error(`Too many parts, expected type/id: ${request.url}`);
+    const parts = request.url.slice('/'.length).split('/');
+    if (parts.length === 1 && parts[0] === '') {
+      parts.pop();
     }
 
-    if (!type) {
-      throw new Error(`Missing type, expected type/id: ${request.url}`);
-    }
+    switch (parts.length) {
+      case 0: {
+        console.log('0', parts);
+        if (request.method === 'GET') {
+          response.setHeader('Content-Type', 'text/html');
+          response.end(await fs.promises.readFile('./index.html', 'utf-8'));
+          return;
+        }
 
-    if (!id) {
-      throw new Error(`Missing id, expected type/id: ${request.url}`);
-    }
-
-    switch (request.method) {
-      case 'GET': {
-        await ensureAppFolder();
-        await ensureTypeFolder(type);
-        response.setHeader('Content-Type', 'application/json');
-        response.end(JSON.stringify(await getNote(type, id)));
-        break;
+        throw new Error(`Invalid route ${request.method} ${request.url}`);
       }
-      case 'POST': {
-        const data = JSON.parse(await drainBody(request));
-        await ensureAppFolder();
-        await ensureTypeFolder(type);
-        await setNote(type, id, data);
-        response.end();
-        break;
+      case 1: {
+        const [type] = parts;
+        if (!type) {
+          throw new Error(`Missing type, expected type/id: ${request.url}`);
+        }
+
+        switch (request.method) {
+          case 'GET': {
+            await ensureAppFolder();
+            await ensureTypeFolder(type);
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify(await listNotes(type)));
+            return;
+          }
+          default: {
+            throw new Error(`Unsupported /type method: ${request.method}`);
+          }
+        }
+      }
+      case 2: {
+        const [type, id] = parts;
+
+        if (!type) {
+          throw new Error(`Missing type, expected type/id: ${request.url}`);
+        }
+
+        if (!id) {
+          throw new Error(`Missing id, expected type/id: ${request.url}`);
+        }
+
+        switch (request.method) {
+          case 'GET': {
+            await ensureAppFolder();
+            await ensureTypeFolder(type);
+            response.setHeader('Content-Type', 'application/json');
+            response.end(JSON.stringify(await getNote(type, id)));
+            return;
+          }
+          case 'POST': {
+            const data = JSON.parse(await drainBody(request));
+            await ensureAppFolder();
+            await ensureTypeFolder(type);
+            await setNote(type, id, data);
+            response.end();
+            return;
+          }
+          default: {
+            throw new Error(`Unsupported /type/id method: ${request.method}`);
+          }
+        }
       }
       default: {
-        throw new Error(`Unsupported method: ${request.method}`);
+        throw new Error(`Invalid route - too many parts ${request.method} ${request.url}`);
       }
     }
   }

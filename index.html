@@ -27,8 +27,15 @@
       const typeInput = document.getElementById('typeInput');
       const idInput = document.getElementById('idInput');
       const dataTextArea = document.getElementById('dataTextArea');
+      const listButton = document.getElementById('listButton');
       const getButton = document.getElementById('getButton');
       const postButton = document.getElementById('postButton');
+
+      listButton.addEventListener('click', async () => {
+        const response = await fetch(`/${typeInput.value}`);
+        const data = await response.json();
+        dataTextArea.value = JSON.stringify(data, null, 2);
+      });
 
       getButton.addEventListener('click', async () => {
         const response = await fetch(`/${typeInput.value}/${idInput.value}`);
@@ -56,8 +63,9 @@
         <input id="idInput" />
       </label>
       <textarea id="dataTextArea" rows="10"></textarea>
-      <button id="getButton">GET</button>
-      <button id="postButton">POST</button>
+      <button id="listButton">GET type</button>
+      <button id="getButton">GET type/id</button>
+      <button id="postButton">POST type/id</button>
     </fieldset>
   </body>
 </html>
