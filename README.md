@@ -52,13 +52,18 @@ friendly name) which would be checked for uniqueness.
 
 `PUT` would always require the ID: `PUT /type/id`.
 
-### Consider introducing a method for getting multiple ones at once
+### Expose the `getNotes` method to optimize `GET /type` + N `GET /type/id`
 
-I think it should be possible to write AppleScript which would return the HTML
-of multiple notes in one record.
+Getting a list of item with their contents (not just IDs) is a common use-case.
+The `getNotes` method implement it, but we don't expose it in the API yet.
 
-This could be used to quickly populate lists of items if the design worked with
-small notes.
+I think the best way to expose this will be on `GET /type/id,id,id,id`.
+Comma is already a special character in the note title so we can use it here.
 
-For designs based on big notes, it would still make sense to populate the list
-progressively, but maybe it could be in batches of notes and not indiviudally.
+### Add a new method for getting the contents of all notes in a folder
+
+This will be very similar to `getNotes` but the `ids` argument won't be there.
+I think I will just make `ids` optional and make it fetch all notes if is is not
+provided.
+
+Will have to think about the endpoint for this though. Maybe `GET /type?full`?
