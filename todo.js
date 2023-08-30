@@ -53,26 +53,17 @@ function renderItem(id, todo, li) {
 
 async function render() {
   itemUl.replaceChildren('Loading…');
-  const response = await fetch('/todos');
+  const idsResponse = await fetch('/todos');
+  const ids = await idsResponse.json();
+  const todosResponse = await fetch('/todos/' + ids.join(','));
+  const todos = await todosResponse.json();
   itemUl.replaceChildren();
 
-  const ids = await response.json();
-  const lis = {};
-  for (const id of ids) {
+  for (const { id, data: todo } of todos) {
     const li = document.createElement('li');
     li.style.cssText = 'display: flex; gap: 1ex;';
-    li.textContent = `Loading "${id}"…`;
-    lis[id] = li;
-    itemUl.append(li);
-  }
-
-  for (const id of ids) {
-    const response = await fetch('/todos/' + id);
-    const todo = await response.json();
-
-    const li = lis[id];
-    li.replaceChildren();
     renderItem(id, todo, li);
+    itemUl.append(li);
   }
 }
 

@@ -1,6 +1,12 @@
 import getNotesHtmls from './getNotesHtmls.js';
 import parseNote from './parseNote.js';
 
+/**
+ * 
+ * @param {string} type 
+ * @param {string[]} ids 
+ * @returns 
+ */
 export default async function getNotes(type, ids) {
   const data = await getNotesHtmls(type, ids);
   for (const item of data) {

@@ -40,6 +40,12 @@ There is an encompassing folder for the application named after `appName.js`.
 
 ## To-Do
 
+### Add Playwright E2E tests to ensure continued functionality
+
+As I add more optimized endpoints and the functionality becomes more complex, I
+am more likely to miss stuff that broke.
+Let's add E2E UI tests to have my back.
+
 ### Consider splitting `POST` and `PUT` into different endpoints
 
 Maybe I should respect the semantics for `POST` being for creating new items and
@@ -52,13 +58,10 @@ friendly name) which would be checked for uniqueness.
 
 `PUT` would always require the ID: `PUT /type/id`.
 
-### Expose the `getNotes` method to optimize `GET /type` + N `GET /type/id`
+### Add a new method for multi-deletion and expose it in the API
 
-Getting a list of item with their contents (not just IDs) is a common use-case.
-The `getNotes` method implement it, but we don't expose it in the API yet.
-
-I think the best way to expose this will be on `GET /type/id,id,id,id`.
-Comma is already a special character in the note title so we can use it here.
+This will be similar to the multi-retrieval.
+We don't have a use for it yet, but it will be good to have for parity.
 
 ### Add a new method for getting the contents of all notes in a folder
 

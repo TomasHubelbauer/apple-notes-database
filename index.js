@@ -7,6 +7,7 @@ import getNote from './getNote.js';
 import setNote from './setNote.js';
 import listNotes from './listNotes.js';
 import deleteNote from './deleteNote.js';
+import getNotes from './getNotes.js';
 
 createServer()
   .listen(process.env.PORT, () => console.log(`http://localhost:${process.env.PORT}`))
@@ -19,7 +20,6 @@ createServer()
 
       switch (parts.length) {
         case 0: {
-          console.log('0', parts);
           if (request.method === 'GET') {
             response.setHeader('Content-Type', 'text/html');
             response.end(await fs.promises.readFile('./index.html', 'utf-8'));
@@ -76,7 +76,15 @@ createServer()
               await ensureAppFolder();
               await ensureTypeFolder(type);
               response.setHeader('Content-Type', 'application/json');
-              response.end(JSON.stringify(await getNote(type, id)));
+
+              if (id.includes(',')) {
+                const ids = id.split(',');
+                response.end(JSON.stringify(await getNotes(type, ids)));
+              }
+              else {
+                response.end(JSON.stringify(await getNote(type, id)));
+              }
+
               return;
             }
             case 'POST': {
@@ -87,6 +95,8 @@ createServer()
               response.end();
               return;
             }
+
+            // TODO: Support comma-separated IDs for mass-delete
             case 'DELETE': {
               await ensureAppFolder();
               await ensureTypeFolder(type);
