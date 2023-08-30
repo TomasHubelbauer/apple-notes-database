@@ -62,17 +62,3 @@ small notes.
 
 For designs based on big notes, it would still make sense to populate the list
 progressively, but maybe it could be in batches of notes and not indiviudally.
-
-### Optimize the to-do list application by not always fully re-rendering
-
-Deletes could be made to work by removing the `li` and not re-rendering.
-If the removal fails, the `fetch` will throw.
-
-Renames could be made to work by removing the `li` and renaming the `label`
-together with boosting the `li` in question to the top of the list.
-
-Toggles would work the same exact way as renames.
-
-Additions would work by factoring out the `item` render function and calling it
-out of band and preprending the resulting `li` to the list instead of a whole
-re-render.
