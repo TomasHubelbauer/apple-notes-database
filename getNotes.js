@@ -4,7 +4,7 @@ import parseNote from './parseNote.js';
 /**
  * 
  * @param {string} type 
- * @param {string[]} ids 
+ * @param {string[] | undefined} ids 
  * @returns 
  */
 export default async function getNotes(type, ids) {
@@ -19,3 +19,4 @@ export default async function getNotes(type, ids) {
 
 // Test via `node getNotes`
 //console.log(await getNotes('items', ['1', '2']));
+//console.log(await getNotes('items'));

@@ -44,15 +44,26 @@ createServer()
 
           const [type] = parts;
           if (!type) {
-            throw new Error(`Missing type, expected type/id: ${request.url}`);
+            throw new Error(`Missing type, expected /type or /type?full: ${request.url}`);
           }
 
           switch (request.method) {
             case 'GET': {
+              const [name, full] = type.split('?');
+              if (full && full !== 'full') {
+                throw new Error(`Invalid type, expected /type or /type?full: ${request.url}`);
+              }
+
               await ensureAppFolder();
-              await ensureTypeFolder(type);
+              await ensureTypeFolder(name);
               response.setHeader('Content-Type', 'application/json');
-              response.end(JSON.stringify(await listNotes(type)));
+              if (full) {
+                response.end(JSON.stringify(await getNotes(name)));
+              }
+              else {
+                response.end(JSON.stringify(await listNotes(name)));
+              }
+
               return;
             }
             default: {
@@ -64,11 +75,11 @@ createServer()
           const [type, id] = parts;
 
           if (!type) {
-            throw new Error(`Missing type, expected type/id: ${request.url}`);
+            throw new Error(`Missing type, expected /type/id: ${request.url}`);
           }
 
           if (!id) {
-            throw new Error(`Missing id, expected type/id: ${request.url}`);
+            throw new Error(`Missing id, expected /type/id: ${request.url}`);
           }
 
           switch (request.method) {

@@ -53,10 +53,8 @@ function renderItem(id, todo, li) {
 
 async function render() {
   itemUl.replaceChildren('Loading…');
-  const idsResponse = await fetch('/todos');
-  const ids = await idsResponse.json();
-  const todosResponse = await fetch('/todos/' + ids.join(','));
-  const todos = await todosResponse.json();
+  const response = await fetch('/todos?full');
+  const todos = await response.json();
   itemUl.replaceChildren();
 
   for (const { id, data: todo } of todos) {

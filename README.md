@@ -49,7 +49,7 @@ Let's add E2E UI tests to have my back.
 ### Consider splitting `POST` and `PUT` into different endpoints
 
 Maybe I should respect the semantics for `POST` being for creating new items and
-`PUT` being for updating existing items.
+`PUT` being for updating existing items and erroring if the item doesn't exist.
 
 In this scenario, `POST` would be a single-component path of just `POST /type`
 and would automatically assign a unique ID or it could optionally have a
@@ -62,11 +62,3 @@ friendly name) which would be checked for uniqueness.
 
 This will be similar to the multi-retrieval.
 We don't have a use for it yet, but it will be good to have for parity.
-
-### Add a new method for getting the contents of all notes in a folder
-
-This will be very similar to `getNotes` but the `ids` argument won't be there.
-I think I will just make `ids` optional and make it fetch all notes if is is not
-provided.
-
-Will have to think about the endpoint for this though. Maybe `GET /type?full`?

@@ -4,16 +4,19 @@ import appName from './appName.js';
 /**
  * 
  * @param {string} type 
- * @param {string[]} ids 
+ * @param {string[] | undefined} ids 
  */
 export default async function getNotesHtmls(type, ids) {
   const htmls = await execute(`
 tell application "Notes"
   set htmls to {}
-  set noteIds to ${JSON.stringify(ids)}
-  repeat with noteId in noteIds
-    set html to body of note noteId of folder "${type}" of folder "${appName}"
-    set end of htmls to {id:noteId as text, html:html}
+  set ids to ${JSON.stringify(ids ?? [])}
+  repeat with aNote in notes of folder "${type}" of folder "${appName}"
+    if ids is {} or name of aNote is in ids then
+      set noteId to name of aNote
+      set html to body of aNote
+      set end of htmls to {id:noteId, html:html}
+    end if
   end repeat
   return htmls
 end tell
@@ -25,7 +28,7 @@ end tell
   for (const line of lines) {
     if (line.startsWith(', id:')) {
       const id = line.slice(', id:'.length, line.indexOf(', html:'));
-      if (id !== ids.shift()) {
+      if (ids && !ids.includes(id)) {
         throw new Error(`Unexpected id, expected same order as ids: ${id}`);
       }
 
@@ -51,3 +54,4 @@ end tell
 
 // Test via `node getNotesHtmls`
 //console.log(await getNotesHtmls('items', ['1', '2']));
+//console.log(await getNotesHtmls('items'));
