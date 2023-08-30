@@ -27,6 +27,10 @@ The API is as follows:
   The expected body is of the same format as the corresponding GET method.
   There is no return value.
 
+- `DELETE type/id` - delete the note of the given type.
+
+  There is no return value.
+
 ## Design
 
 Entity/type approximates a database table and is implemented using Apple Notes
