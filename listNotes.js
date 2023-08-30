@@ -18,7 +18,12 @@ end tell
 `;
 
   const result = await execute(script);
-  return result.trim().split(', ');
+  const ids = result.trim().split(', ');
+  if (ids.length === 1 && ids[0] === '') {
+    return [];
+  }
+
+  return ids;
 }
 
 // Test via `node listNotes`
