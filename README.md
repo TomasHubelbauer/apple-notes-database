@@ -58,11 +58,6 @@ friendly name) which would be checked for uniqueness.
 
 `PUT` would always require the ID: `PUT /type/id`.
 
-### Add a new method for multi-deletion and expose it in the API
-
-This will be similar to the multi-retrieval.
-We don't have a use for it yet, but it will be good to have for parity.
-
 ### Add support for ID-less multi-deletion on `DELETE /type`
 
 This will bring parity to ID-less multi-retrival at `GET /type?full`.
