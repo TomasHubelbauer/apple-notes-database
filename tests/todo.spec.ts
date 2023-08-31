@@ -1,6 +1,8 @@
 import { test, expect } from "@playwright/test";
 
-!process.env.CI && test('deleting a to-do item works', async ({ page }) => {
+test('deleting a to-do item works', async ({ page }) => {
+  test.skip(process.platform !== 'darwin', 'Needs to run on macOS with AppleScript support for Apple Notes scripting.');
+
   await page.goto('/todo.html');
   await page.waitForResponse('/todos?full');
 
@@ -37,7 +39,9 @@ import { test, expect } from "@playwright/test";
   }
 });
 
-!process.env.CI && test('adding a new to-do item by pressing the button works', async ({ page }) => {
+test('adding a new to-do item by pressing the button works', async ({ page }) => {
+  test.skip(process.platform !== 'darwin', 'Needs to run on macOS with AppleScript support for Apple Notes scripting.');
+
   await page.goto('/todo.html');
   await page.waitForResponse('/todos?full');
 
@@ -62,7 +66,9 @@ import { test, expect } from "@playwright/test";
   console.log(`Added a new to-do item with the name '${name}'`);
 });
 
-!process.env.CI && test('renaming a to-do item works', async ({ page }) => {
+test('renaming a to-do item works', async ({ page }) => {
+  test.skip(process.platform !== 'darwin', 'Needs to run on macOS with AppleScript support for Apple Notes scripting.');
+
   await page.goto('/todo.html');
   await page.waitForResponse('/todos?full');
 
@@ -92,7 +98,9 @@ import { test, expect } from "@playwright/test";
   console.log(`Renamed the '${oldText}' to-do item to '${newText}'`);
 });
 
-!process.env.CI && test('toggling a to-do item works', async ({ page }) => {
+test('toggling a to-do item works', async ({ page }) => {
+  test.skip(process.platform !== 'darwin', 'Needs to run on macOS with AppleScript support for Apple Notes scripting.');
+
   await page.goto('/todo.html');
   await page.waitForResponse('/todos?full');
 
