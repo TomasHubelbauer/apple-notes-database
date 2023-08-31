@@ -10,6 +10,10 @@ jobs:
     timeout-minutes: 60
     runs-on: macos-latest
     steps:
+      - name: Test AppleScript with Apple Notes
+        run: |
+          osascript -e 'tell application "Notes" to activate'
+          osascript -e 'tell application "Notes" to name of every note in every folder'
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
