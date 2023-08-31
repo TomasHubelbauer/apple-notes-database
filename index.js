@@ -41,6 +41,11 @@ createServer()
               response.end(await fs.promises.readFile('./todo.js', 'utf-8'));
               return;
             }
+            case 'renderItem.js': {
+              response.setHeader('Content-Type', 'application/javascript');
+              response.end(await fs.promises.readFile('./renderItem.js', 'utf-8'));
+              return;
+            }
           }
 
           const [type] = parts;
