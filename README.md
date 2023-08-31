@@ -38,20 +38,25 @@ There is an encompassing folder for the application named after `appName.js`.
 
   There is no return value.
 
-## Design
+## Testing
 
-Entity/type approximates a database table and is implemented using Apple Notes
-folders.
-
-There is an encompassing folder for the application named after `appName.js`.
+The app uses Playwright for E2E testing.
+Run the tests using `npm test`.
+The test runner will start the app server itself.
 
 ## To-Do
 
-### Add Playwright E2E tests to ensure continued functionality
+### Create a mock BE for running tests in CI or use a macOS agent
 
-As I add more optimized endpoints and the functionality becomes more complex, I
-am more likely to miss stuff that broke.
-Let's add E2E UI tests to have my back.
+Most of the tests need to work with AppleScript.
+
+I will try to make the CI run on macOS and see if running AppleScript against
+Apple Notes works as expected on there.
+This would be the preferred option, because the tests would be E2E.
+
+Alternatively, in case I can't make AppleScript work on GitHub Actions,
+I will abstract out the storage layer and substitute an in-memory based option
+when running on GitHub Actions so that the tests can work and test the UI only.
 
 ### Consider splitting `POST` and `PUT` into different endpoints
 

@@ -22,8 +22,6 @@ await render();
 
 editorInput.addEventListener('keydown', async (event) => {
   const value = editorInput.value.trim();
-  addButton.disabled = !value;
-
   if (!value) {
     return;
   }
@@ -43,13 +41,22 @@ editorInput.addEventListener('keydown', async (event) => {
   renderItem(value, { text: value, done: false }, li);
 });
 
+editorInput.addEventListener('keyup', () => {
+  addButton.disabled = !editorInput.value.trim();
+});
+
 addButton.addEventListener('click', async () => {
   const value = editorInput.value.trim();
   if (!value) {
     return;
   }
 
+  addButton.disabled = true;
   await fetch('/todos/' + value, { method: 'POST', body: JSON.stringify({ text: value }) });
   editorInput.value = '';
-  await render();
+
+  const li = document.createElement('li');
+  li.style.cssText = 'display: flex; gap: 1ex;';
+  itemUl.prepend(li);
+  renderItem(value, { text: value, done: false }, li);
 });
