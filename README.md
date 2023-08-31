@@ -12,7 +12,14 @@ Run `PORT=3000 node .` to run the server.
 The UI is at `/` and allows listing notes and reading and writing notes by ID.
 There is also a to-do list sample running at `/todo.html`.
 
-The API is as follows:
+## Design
+
+Entity/type approximates a database table and is implemented using Apple Notes
+folders.
+
+There is an encompassing folder for the application named after `appName.js`.
+
+## API
 
 - `GET type` - list the IDs of entities of the given type
 
