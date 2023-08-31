@@ -59,6 +59,9 @@ https://github.com/actions/runner-images/issues/553#issuecomment-648109166
 Also this if Notes need to be activated first:
 https://github.com/actions/runner-images/issues/553#issuecomment-922834565
 
+Try this too:
+https://github.com/actions/runner-images/issues/7531#issuecomment-1609188199
+
 I might need to take screenshots or videos to see what is happening on the
 runner.
 
