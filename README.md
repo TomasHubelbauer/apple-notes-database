@@ -46,13 +46,21 @@ The test runner will start the app server itself.
 
 ## To-Do
 
-### Create a mock BE for running tests in CI or use a macOS agent
+### Try to configure the GitHub Actions macOS runner AppleScript permissions
 
-Most of the tests need to work with AppleScript.
+The tests require AppleScript to script Apple Notes and are timing out at the
+moment.
+I am not sure the exact root cause yet, but it is likely my Node process need to
+be added to macOS permissions so it can script Apple Notes.
 
-I will try to make the CI run on macOS and see if running AppleScript against
-Apple Notes works as expected on there.
-This would be the preferred option, because the tests would be E2E.
+This is how permissions can be added to macOS:
+https://github.com/actions/runner-images/issues/553#issuecomment-648109166
+
+Also this if Notes need to be activated first:
+https://github.com/actions/runner-images/issues/553#issuecomment-922834565
+
+I might need to take screenshots or videos to see what is happening on the
+runner.
 
 Alternatively, in case I can't make AppleScript work on GitHub Actions,
 I will abstract out the storage layer and substitute an in-memory based option
