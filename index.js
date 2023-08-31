@@ -8,6 +8,7 @@ import setNote from './setNote.js';
 import listNotes from './listNotes.js';
 import deleteNote from './deleteNote.js';
 import getNotes from './getNotes.js';
+import deleteNotes from './deleteNotes.js';
 
 createServer()
   .listen(process.env.PORT, () => console.log(`http://localhost:${process.env.PORT}`))
@@ -107,11 +108,18 @@ createServer()
               return;
             }
 
-            // TODO: Support comma-separated IDs for mass-delete
             case 'DELETE': {
               await ensureAppFolder();
               await ensureTypeFolder(type);
-              await deleteNote(type, id);
+
+              if (id.includes(',')) {
+                const ids = id.split(',');
+                await deleteNotes(type, ids);
+              }
+              else {
+                await deleteNote(type, id);
+              }
+
               response.end();
               return;
             }

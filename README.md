@@ -62,3 +62,23 @@ friendly name) which would be checked for uniqueness.
 
 This will be similar to the multi-retrieval.
 We don't have a use for it yet, but it will be good to have for parity.
+
+### Add support for ID-less multi-deletion on `DELETE /type`
+
+This will bring parity to ID-less multi-retrival at `GET /type?full`.
+It will be useful for building file-system-like experiences on top of the notes.
+It should be accompanied with a method for creating a folder (different from
+indirectly via `GET /type` or `GET /type?full` through `ensureTypeFolder`) so
+that the folder CRUD actions can be carried out end to end over the API.
+
+### Add a new app with multi-select support to demo the multi-deletion feature
+
+I need to test this feature more as well, it seems kind of unreliable and I had
+trouble putting together the AppleScript for it.
+In some versions which I attempted to make slicker I would get seemingly racy
+errors, sometimes it would delete the notes successfully, sometimes it would
+error with unhelpful vague error messages.
+The current version when passed a set of IDs sometimes succeeds but doesn't
+actually seem to delete the notes?
+I might need to craft better AppleScript or add checks after the command with
+retry logic maybe?
