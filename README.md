@@ -62,6 +62,11 @@ https://github.com/actions/runner-images/issues/553#issuecomment-922834565
 Try this too:
 https://github.com/actions/runner-images/issues/7531#issuecomment-1609188199
 
+And this:
+https://developer.apple.com/forums/thread/119373
+Maybe I should query the database, see the structure or find the exact record
+that was added on my local Mac using the UI and recreate it for the runner.
+
 I might need to take screenshots or videos to see what is happening on the
 runner.
 
