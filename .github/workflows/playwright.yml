@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Read existing permissions to view the structure of the database
         run: |
-          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" -cmd ".headers ON" "select * from access"
+          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" -cmd ".headers ON" "select * from access where service = 'kTCCServiceAppleEvents'"
       - name: Grant permissions for Apple Notes
         run: |
           sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service, client, client_type, indirect_object_identifier_type, indirect_object_identifier) values ('kTCCServiceAppleEvents', '/bin/bash', 1, 0, 'com.apple.Notes')"
