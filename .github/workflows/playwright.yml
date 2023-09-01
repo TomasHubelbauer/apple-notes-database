@@ -11,11 +11,12 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Read existing permissions to view the structure of the database
+        # service|client|client_type|auth_value|auth_reason|auth_version|csreq|policy_id|indirect_object_identifier_type|indirect_object_identifier|indirect_object_code_identity|flags|last_modified
         run: |
           sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" -cmd ".headers ON" "select * from access where service = 'kTCCServiceAppleEvents'"
       - name: Grant permissions for Apple Notes
         run: |
-          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service, client, client_type, indirect_object_identifier_type, indirect_object_identifier) values ('kTCCServiceAppleEvents', '/bin/bash', 1, 0, 'com.apple.Notes')"
+          sqlite3 "/Users/runner/Library/Application Support/com.apple.TCC/TCC.db" "insert into access (service, client, client_type, auth_value, auth_reason, indirect_object_identifier_type, indirect_object_identifier) values ('kTCCServiceAppleEvents', '/bin/bash', 1, 1, 2, 0, 'com.apple.Notes')"
       - name: Test AppleScript with Apple Notes
         run: |
           osascript -e 'tell application "Notes" to activate'
