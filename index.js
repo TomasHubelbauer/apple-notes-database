@@ -10,15 +10,10 @@ import deleteNote from './deleteNote.js';
 import getNotes from './getNotes.js';
 import deleteNotes from './deleteNotes.js';
 
-if (process.env.CI) {
-  console.log('CI detected, running in test mode:');
-  const execute = await import('./execute.js').then((m) => m.default);
-  console.log(await execute('tell application "Notes" to name of every note in every folder'));
-}
-
 createServer()
   .listen(process.env.PORT, () => console.log(`http://localhost:${process.env.PORT}`))
   .on('request', async (request, response) => {
+    console.log(request.method, request.url);
     try {
       const parts = request.url.slice('/'.length).split('/');
       if (parts.length === 1 && parts[0] === '') {
@@ -145,6 +140,7 @@ createServer()
       }
     }
     catch (error) {
+      console.error(error);
       response.statusCode = 400;
       response.end(error.message);
     }

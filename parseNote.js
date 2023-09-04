@@ -8,9 +8,10 @@ export default function parseNote(id, html) {
     switch (state) {
       case 'h1': {
         // Match both proper <h1> and formatting made to look like <h1>
-        const match = line.match(/^<div>(<h1>(?<h1Id>.*?)<\/h1>|<b><span style="font-size: 24px">(?<htmlId>.*?)<\/span><\/b>(<br>)?)<\/div>$/);
+        const regex = /^<div>(<h1>(?<h1Id>.*?)<\/h1>|<b><span style="font-size: 24px">(?<htmlId>.*?)<\/span><\/b>(<br>)?)<\/div>$/;
+        const match = line.match(regex);
         if (!match) {
-          throw new Error(`Unexpected line: ${line}`);
+          throw new Error(`Unexpected line, expected ${regex}: ${line}\n${html}`);
         }
 
         if (match.groups.h1Id !== id && match.groups.htmlId !== id) {
@@ -22,7 +23,7 @@ export default function parseNote(id, html) {
       }
       case 'h1-br-h2': {
         if (line !== '<div><br></div>') {
-          throw new Error(`Unexpected line: ${line}`);
+          throw new Error(`Unexpected line, expected <div><br></div>: ${line}\n${html}`);
         }
 
         state = 'h2';
@@ -30,9 +31,10 @@ export default function parseNote(id, html) {
       }
       case 'h2': {
         // Match both proper <h2> and formatting made to look like <h2>
-        const match = line.match(/^<div>(<h2>(?<h2Key>.*)<\/h2>|<b><span style="font-size: 18px">(?<htmlKey>.*?)<\/span><\/b>(<br>)?)<\/div>$/);
+        const regex = /^<div>(<h2>(?<h2Key>.*)<\/h2>|<b><span style="font-size: 18px">(?<htmlKey>.*?)<\/span><\/b>(<br>)?)<\/div>$/;
+        const match = line.match(regex);
         if (!match) {
-          throw new Error(`Unexpected line: ${line}`);
+          throw new Error(`Unexpected line, expected ${regex}: ${line}\n${html}`);
         }
 
         key = match.groups.h2Key ?? match.groups.htmlKey;
@@ -40,9 +42,10 @@ export default function parseNote(id, html) {
         break;
       }
       case 'div': {
-        const match = line.match(/^<div>(.*)<\/div>$/);
+        const regex = /^<div>(.*)<\/div>$/;
+        const match = line.match(regex);
         if (!match) {
-          throw new Error(`Unexpected line: ${line}`);
+          throw new Error(`Unexpected line, expected ${regex}: ${line}\n${html}`);
         }
 
         data[key] = match[1];
@@ -56,7 +59,7 @@ export default function parseNote(id, html) {
         }
 
         if (line !== '<div><br></div>') {
-          throw new Error(`Unexpected line: ${line}`);
+          throw new Error(`Unexpected line, expected <div><br></div>: ${line}\n${html}`);
         }
 
         state = 'h2';
@@ -64,20 +67,20 @@ export default function parseNote(id, html) {
       }
       case 'test-exit': {
         if (line !== '') {
-          throw new Error(`Unexpected line: ${line}`);
+          throw new Error(`Unexpected line, expected '': ${line}\n${html}`);
         }
 
         state = 'exit';
         break;
       }
       default: {
-        throw new Error(`Unexpected state: ${state}`);
+        throw new Error(`Unexpected state: ${state}\n${html}`);
       }
     }
   }
 
-  if (state !== 'exit' && state !== 'div=') {
-    throw new Error(`Unexpected state: ${state}`);
+  if (state !== 'exit' && state !== 'div') {
+    throw new Error(`Unexpected state, expected 'exit' or 'div': ${state}\n${html}`);
   }
 
   return data;
