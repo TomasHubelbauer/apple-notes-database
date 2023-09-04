@@ -8,7 +8,10 @@ on:
 jobs:
   test:
     timeout-minutes: 60
-    runs-on: macos-latest
+    # Use `macos-13` over `macos-latest` (macOS 12) to be able to grant Apple
+    # Notes accessibility access permissions.
+    # See https://github.com/actions/runner-images/issues/8214
+    runs-on: macos-13
     steps:
       - name: Grant Apple Notes accessibility access permissions
         run: |
