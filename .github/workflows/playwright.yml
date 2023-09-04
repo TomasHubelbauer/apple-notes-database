@@ -17,7 +17,10 @@ jobs:
         run: |
           sudo sqlite3 $HOME/Library/Application\ Support/com.apple.TCC/TCC.db "INSERT OR REPLACE INTO access VALUES('kTCCServiceAppleEvents','/usr/local/opt/runner/provisioner/provisioner',1,2,3,1,NULL,NULL,0,'com.apple.Notes',X'fade0c000000002c0000000100000006000000020000000f636f6d2e6170706c652e4e6f7465730000000003',NULL,1592919552);"
           osascript -e 'tell application "Notes" to activate'
+          echo "Apple Script directly:"
           osascript -e 'tell application "Notes" to name of every note in every folder'
+          echo "Apple Script via Node:"
+          node -p "require('child_process').execSync(`osascript -e 'tell application \"Notes\" to name of every note in every folder'`).toString()"
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:

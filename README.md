@@ -46,33 +46,15 @@ The test runner will start the app server itself.
 
 ## To-Do
 
-### Try to configure the GitHub Actions macOS runner AppleScript permissions
+### Figure out why the Playwright tests are failing in the CI
 
-The tests require AppleScript to script Apple Notes and are timing out at the
-moment.
-I am not sure the exact root cause yet, but it is likely my Node process need to
-be added to macOS permissions so it can script Apple Notes.
+See https://github.com/actions/runner-images/issues/8214.
+I am not able to successfully run Apple Script from the CLI and control Apple
+Notes with it.
 
-This is how permissions can be added to macOS:
-https://github.com/actions/runner-images/issues/553#issuecomment-648109166
-
-Also this if Notes need to be activated first:
-https://github.com/actions/runner-images/issues/553#issuecomment-922834565
-
-Try this too:
-https://github.com/actions/runner-images/issues/7531#issuecomment-1609188199
-
-And this:
-https://developer.apple.com/forums/thread/119373
-Maybe I should query the database, see the structure or find the exact record
-that was added on my local Mac using the UI and recreate it for the runner.
-
-I might need to take screenshots or videos to see what is happening on the
-runner.
-
-Alternatively, in case I can't make AppleScript work on GitHub Actions,
-I will abstract out the storage layer and substitute an in-memory based option
-when running on GitHub Actions so that the tests can work and test the UI only.
+I am seeing the tests fail though, and I think it is because I am not able to
+run the AppleScript from Node.
+I need to verify this.
 
 ### Consider splitting `POST` and `PUT` into different endpoints
 
