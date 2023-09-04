@@ -39,7 +39,7 @@ end tell
     }
 
     if (!note) {
-      throw new Error(`Unexpected line: ${line}\n${htmls}`);
+      throw new Error(`Unexpected line: ${line}\n${JSON.stringify({ line, lines }, null, 2)}`);
     }
 
     note.html += '\n' + line;
