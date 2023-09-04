@@ -23,12 +23,12 @@ jobs:
           osascript -e 'tell application "Notes" to activate'
           echo "Apple Script directly:"
           osascript -e 'tell application "Notes" to name of every note in every folder'
-          echo "Apple Script via Node:"
-          npm start &
-          sleep 5
-          curl localhost:3000/items
-          curl -X POST localhost:3000/items/1 -d '{"name":"test"}'
-          curl localhost:3000/items
+          # echo "Apple Script via Node:"
+          # npm start &
+          # sleep 5
+          # curl localhost:3000/items
+          # curl -X POST localhost:3000/items/1 -d '{"name":"test"}'
+          # curl localhost:3000/items
       - name: Install dependencies
         run: npm install
       - name: Install Playwright Browsers
