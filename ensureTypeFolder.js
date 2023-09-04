@@ -10,8 +10,9 @@ end tell
 `;
 
     const result = await execute(script);
-    if (!result.match(/folder id x-coredata:\/\/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}\/ICFolder\/\w{5}\n$/)) {
-      throw new Error(`Unexpected result: ${result}`);
+    const regex = /folder id x-coredata:\/\/\w{8}-\w{4}-\w{4}-\w{4}-\w{12}\/ICFolder\/\w+\n$/;
+    if (!result.match(regex)) {
+      throw new Error(`Unexpected result, expected ${regex}: ${result}`);
     }
   }
   catch (error) {
