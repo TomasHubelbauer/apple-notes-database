@@ -14,7 +14,6 @@ if (process.env.CI) {
   console.log('CI detected, running in test mode:');
   const execute = await import('./execute.js').then((m) => m.default);
   console.log(await execute('tell application "Notes" to name of every note in every folder'));
-  process.exit(0);
 }
 
 createServer()
