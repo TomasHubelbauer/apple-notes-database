@@ -10,6 +10,13 @@ import deleteNote from './deleteNote.js';
 import getNotes from './getNotes.js';
 import deleteNotes from './deleteNotes.js';
 
+if (process.env.CI) {
+  console.log('CI detected, running in test mode:');
+  const execute = await import('./execute.js').then((m) => m.default);
+  console.log(await execute('tell application "Notes" to name of every note in every folder'));
+  process.exit(0);
+}
+
 createServer()
   .listen(process.env.PORT, () => console.log(`http://localhost:${process.env.PORT}`))
   .on('request', async (request, response) => {

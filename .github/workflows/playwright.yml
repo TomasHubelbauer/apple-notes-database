@@ -24,8 +24,7 @@ jobs:
           echo "Apple Script directly:"
           osascript -e 'tell application "Notes" to name of every note in every folder'
           echo "Apple Script via Node:"
-          cd .github/workflows
-          node test
+          npm start
       - name: Install dependencies
         run: npm install
       - name: Install Playwright Browsers
