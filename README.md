@@ -46,15 +46,20 @@ The test runner will start the app server itself.
 
 ## To-Do
 
-### Figure out why the Playwright tests are failing in the CI
+### Fix parsing issues that happen on the CI
 
-See https://github.com/actions/runner-images/issues/8214.
-I am not able to successfully run Apple Script from the CLI and control Apple
-Notes with it.
+https://github.com/TomasHubelbauer/apple-notes-database/actions/workflows/playwright.yml
 
-I am seeing the tests fail though, and I think it is because I am not able to
-run the AppleScript from Node.
-I need to verify this.
+I get good results locally but the responses are a bit different on the CI.
+
+### Switch the macOS image to macOS 12 while it is latest
+
+I got help making the AppleScript work for macOS 13:
+https://github.com/actions/runner-images/issues/8214
+
+This image is in beta though.
+I should find a way to do this in macOS 12 and only switch to macOS 13 once it
+it latest.
 
 ### Consider splitting `POST` and `PUT` into different endpoints
 
