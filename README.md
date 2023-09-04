@@ -1,5 +1,7 @@
 # Apple Notes Database
 
+[![Playwright Tests](https://github.com/TomasHubelbauer/apple-notes-database/actions/workflows/playwright.yml/badge.svg)](https://github.com/TomasHubelbauer/apple-notes-database/actions/workflows/playwright.yml)
+
 This project is an experiment in using Apple Notes as a storage layer for a web
 application.
 
