@@ -25,7 +25,7 @@ jobs:
           osascript -e 'tell application "Notes" to name of every note in every folder'
           echo "Apple Script via Node:"
           npm start &
-          echo 5
+          sleep 5
           curl localhost:3000/items
           curl -X POST localhost:3000/items/1 -d '{"name":"test"}'
           curl localhost:3000/items
