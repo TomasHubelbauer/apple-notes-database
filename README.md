@@ -46,11 +46,20 @@ The test runner will start the app server itself.
 
 ## To-Do
 
-### Fix parsing issues that happen on the CI
+### Make `getNotesHtmls` handle title-only notes
 
-https://github.com/TomasHubelbauer/apple-notes-database/actions/workflows/playwright.yml
+On the CI there is a single note with only a title and it is failing the parser:
 
-I get good results locally but the responses are a bit different on the CI.
+```
+Error: Unexpected line: ,
+{
+  "line": ",",
+  "lines": [
+    ","
+  ]
+}
+at getNotesHtmls (getNotesHtmls.js:42:13)
+```
 
 ### Switch the macOS image to macOS 12 while it is latest
 
