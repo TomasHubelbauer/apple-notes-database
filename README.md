@@ -48,6 +48,11 @@ The test runner will start the app server itself.
 
 ## To-Do
 
+### See if the Playwright browser download could be cached for say a week
+
+We want to refresh it every once in a while, but every test run seems too much.
+Let's see if I can use the GitHub Actions cache to do this.
+
 ### Switch the macOS image to macOS 12 while it is latest
 
 I got help making the AppleScript work for macOS 13:
