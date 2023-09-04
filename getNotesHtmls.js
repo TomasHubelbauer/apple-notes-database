@@ -22,6 +22,10 @@ tell application "Notes"
 end tell
 `);
 
+  if (htmls === '\n') {
+    return [];
+  }
+
   const notes = [];
   let note;
   const lines = (', ' + htmls).trim().split('\n');
