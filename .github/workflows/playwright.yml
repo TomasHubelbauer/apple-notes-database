@@ -17,9 +17,7 @@ jobs:
         with:
           node-version: 18
       - name: Grant Apple Notes accessibility access permissions
-        run: |
-          sudo sqlite3 $HOME/Library/Application\ Support/com.apple.TCC/TCC.db "INSERT OR REPLACE INTO access VALUES('kTCCServiceAppleEvents','/usr/local/opt/runner/provisioner/provisioner',1,2,3,1,NULL,NULL,0,'com.apple.Notes',X'fade0c000000002c0000000100000006000000020000000f636f6d2e6170706c652e4e6f7465730000000003',NULL,1592919552);"
-          osascript -e 'tell application "Notes" to name of every note in every folder'
+        run: sudo sqlite3 $HOME/Library/Application\ Support/com.apple.TCC/TCC.db "INSERT OR REPLACE INTO access VALUES('kTCCServiceAppleEvents','/usr/local/opt/runner/provisioner/provisioner',1,2,3,1,NULL,NULL,0,'com.apple.Notes',X'fade0c000000002c0000000100000006000000020000000f636f6d2e6170706c652e4e6f7465730000000003',NULL,1592919552);"
       - name: Install dependencies
         run: npm install
       - name: Install Playwright browsers
